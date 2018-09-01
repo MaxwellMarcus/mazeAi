@@ -132,8 +132,7 @@ def sort(original):
 
     return(end)
 
-def brain(player,generation):
-    print("working")
+def brain(player,generation,playernum):
 
     global fitnesses
 
@@ -153,32 +152,27 @@ def brain(player,generation):
     while len(player[4]) < 20:
 
         done = False
-        print("working")
         if where == 1:
-            print("working")
             moveRight(player)
             if generation == 1:
                 player[4] += [1]
         elif where == 2:
-            print("working")
             moveLeft(player)
             if generation == 1:
                 player[4] += [2]
         elif where == 3:
-            print("working")
             moveUp(player)
             if generation == 1:
                 player[4] += [3]
         elif where == 4:
-            print("working")
             moveDown(player)
             if generation == 1:
                 player[4] += [4]
 
         isDone(player)
-        x = player[0]
-        y = player[1]
-        print("(" + str(x/100) + "," + str(y/100) + ")")
+        x = player[2] - 10
+        y = player[3] - 10
+        print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
     player[5] = ((player[2] - 1310) + (player[3] - 810))/100
 
 
@@ -189,7 +183,7 @@ def start(generation):
     moveCreatures = 0
 
     while moveCreatures < len(creatureList):
-        brain(creatureList[moveCreatures],generation)
+        brain(creatureList[moveCreatures],generation,moveCreatures)
 
         fitnesses += [creatureList[moveCreatures]]
 
