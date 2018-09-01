@@ -12,6 +12,8 @@ import random
 #canvas = Canvas(#root,width = screen_width,height = screen_height)
 #canvas.pack()
 
+print("working")
+
 creatureList = []
 
 notStarted = True
@@ -86,8 +88,8 @@ def moveDown(player):
 def isDone(player):
     if player[0] == 1210 and player[1] == 710 and player[2] == 1310 and player[3] == 810:
         player[5] = len(player[4])
-        print("done")
-        print(len(player[4]))
+        #print("done")
+        #print(len(player[4]))
 
 def sort(original):
     end = []
@@ -103,21 +105,21 @@ def sort(original):
 
         if x==0:
             end += [original[x]]
-            print(str(len(end)) + "," + "begining")
+        #    print(str(len(end)) + "," + "begining")
         elif num < end[0][5]:
             end.insert(0,original[x])
-            print(str(len(end)) + "," + "begining")
+#            print(str(len(end)) + "," + "begining")
         elif num >= end[0][5]:
             bigest = True
             while y < len(end):
                 if num<end[y][5]:
-                    print(str(len(end)) + "," + "middle")
+#                    print(str(len(end)) + "," + "middle")
                     end.insert(y,original[x])
                     bigest = False
                     break
                 y += 1
             if bigest:
-                print(str(len(end)) + "," + "end")
+#                print(str(len(end)) + "," + "end")
                 end.append(original[x])
         else:
             print("what the hay is happening")
@@ -131,32 +133,52 @@ def sort(original):
     return(end)
 
 def brain(player,generation):
+    print("working")
+
     global fitnesses
 
     startTime = time.time()
 
     done = False
 
+    e = 1
+
+    where = []
+
+    if generation == 1:
+        while e < 20:
+            where += [random.randint(1,4)]
+            e = e + 1
+
     while len(player[4]) < 20:
-        #time.sleep(1)
 
         done = False
-        where = random.randint(1,4)
+        print("working")
         if where == 1:
+            print("working")
             moveRight(player)
-            player[4] += [1]
+            if generation == 1:
+                player[4] += [1]
         elif where == 2:
+            print("working")
             moveLeft(player)
-            player[4] += [2]
+            if generation == 1:
+                player[4] += [2]
         elif where == 3:
+            print("working")
             moveUp(player)
-            player[4] += [3]
+            if generation == 1:
+                player[4] += [3]
         elif where == 4:
+            print("working")
             moveDown(player)
-            player[4] += [4]
-        isDone(player)
-        print(str(generation) + " (" + str((player[0] - 10)/100) + "," + str((player[1] - 10)/100) + ")")
+            if generation == 1:
+                player[4] += [4]
 
+        isDone(player)
+        x = player[0]
+        y = player[1]
+        print("(" + str(x/100) + "," + str(y/100) + ")")
     player[5] = ((player[2] - 1310) + (player[3] - 810))/100
 
 
@@ -166,18 +188,15 @@ def start(generation):
     global creatureList
     moveCreatures = 0
 
-    time.sleep(1)
     while moveCreatures < len(creatureList):
-        brain(creatureList[moveCreatures],moveCreatures)
+        brain(creatureList[moveCreatures],generation)
 
         fitnesses += [creatureList[moveCreatures]]
 
         moveCreatures += 1
 
     fitnesses = sort(fitnesses)
-
-    print(len(fitnesses))
-    print(fitnesses)
+    createNewGen()
 
 
 createNewGen()
