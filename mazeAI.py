@@ -29,7 +29,7 @@ def createNewGen():
     createCreatures = 0
 
     while createCreatures < 1000:
-        _1 = [10,10,110,110,[],0]#,createCreatures]
+        _1 = [10,10,110,110,[],0,]#,createCreatures]
 
 #        _1 += [canvas.create_rectangle(_1[0],_1[1],_1[2],_1[3],fill = "gray")]
 
@@ -45,7 +45,7 @@ def createNewGen():
     game = True
 
 def moveRight(player):
-    if len(player[4]) < 20 and not player[2] + 100 > 1310:
+    if len(player[4]) < 100 and not player[2] + 100 > 1310:
 #        canvas.delete(player[6])
 
 
@@ -55,7 +55,7 @@ def moveRight(player):
 #        player[6] = [canvas.create_rectangle(player[0],player[1],player[2],player[3],fill = "gray")]
 
 def moveLeft(player):
-    if len(player[4]) < 20 and not player[0] - 100 < 0:
+    if len(player[4]) < 100 and not player[0] - 100 < 0:
 
 #        canvas.delete(player[6])
 
@@ -66,7 +66,7 @@ def moveLeft(player):
 #        player[6] = [canvas.create_rectangle(player[0],player[1],player[2],player[3],fill = "gray")]
 
 def moveUp(player):
-    if len(player[4]) < 20 and not player[1] - 100 < 0:
+    if len(player[4]) < 100 and not player[1] - 100 < 0:
 #        canvas.delete(player[6])
 
 
@@ -76,7 +76,7 @@ def moveUp(player):
 #        player[6] = [canvas.create_rectangle(player[0],player[1],player[2],player[3],fill = "gray")]
 
 def moveDown(player):
-    if len(player[4]) < 20 and not player[3] + 100 > 810:
+    if len(player[4]) < 100 and not player[3] + 100 > 810:
 #        canvas.delete(player[6])
 
 
@@ -145,37 +145,37 @@ def brain(player,generation,playernum):
     where = []
 
     if generation == 1:
-        while e < 20:
+        while e < 100:
             where += [random.randint(1,4)]
             e = e + 1
 
-    while len(player[4]) < 20:
+    while len(player[4]) < 100:
 
         done = False
-        if where == 1:
+        if where[len(player[4])-1] == 1:
             moveRight(player)
             if generation == 1:
                 player[4] += [1]
-        elif where == 2:
+        elif where[len(player[4]) -1] == 2:
             moveLeft(player)
             if generation == 1:
                 player[4] += [2]
-        elif where == 3:
+        elif where[len(player[4]) - 1] == 3:
             moveUp(player)
             if generation == 1:
                 player[4] += [3]
-        elif where == 4:
+        elif where[len(player[4]) - 1] == 4:
             moveDown(player)
             if generation == 1:
-                player[4] += [4]
-
+                 player[4] += [4]
+        else:
+            print("what")
         isDone(player)
+
         x = player[2] - 10
         y = player[3] - 10
         print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
     player[5] = ((player[2] - 1310) + (player[3] - 810))/100
-
-
 
 def start(generation):
     global fitnesses
@@ -190,6 +190,7 @@ def start(generation):
         moveCreatures += 1
 
     fitnesses = sort(fitnesses)
+    print(fitnesses[199])
     createNewGen()
 
 
