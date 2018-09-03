@@ -25,22 +25,27 @@ fitnesses = []
 def createNewGen():
     global creatureList
     global generation
+    global fitnesses
 
     createCreatures = 0
-
-    while createCreatures < 1000:
-        _1 = [10,10,110,110,[],0,]#,createCreatures]
-
-#        _1 += [canvas.create_rectangle(_1[0],_1[1],_1[2],_1[3],fill = "gray")]
-
-        creatureList.append(_1)
-        createCreatures += 1
-
     generation += 1
 
-    #finish = canvas.create_rectangle(1210,710,1310,810,fill = "green")
+    if generation == 1:
+        while createCreatures < 1000:
+            _1 = [10,10,110,110,[],0,]#,createCreatures]
 
-#    border = canvas.create_rectangle(1317,817,4,4,width = 10)
+            creatureList.append(_1)
+            createCreatures += 1
+        createCreatures = 0
+    else:
+        print("gen 2!")
+        creatureList = []
+        while createCreatures < 200:
+            l = 0
+            while l < 5:
+                _1 = [10,10,110,110,fitnesses[createCreatures][4]]
+                l += 1
+            createCreatures += 1
 
     game = True
 
@@ -145,37 +150,52 @@ def brain(player,generation,playernum):
     where = []
 
     if generation == 1:
-        while e < 100:
+        while e < 20:
             where += [random.randint(1,4)]
             e = e + 1
 
-    while len(player[4]) < 100:
+        while len(player[4]) < 20:
 
-        done = False
-        if where[len(player[4])-1] == 1:
-            moveRight(player)
-            if generation == 1:
-                player[4] += [1]
-        elif where[len(player[4]) -1] == 2:
-            moveLeft(player)
-            if generation == 1:
-                player[4] += [2]
-        elif where[len(player[4]) - 1] == 3:
-            moveUp(player)
-            if generation == 1:
-                player[4] += [3]
-        elif where[len(player[4]) - 1] == 4:
-            moveDown(player)
-            if generation == 1:
-                 player[4] += [4]
-        else:
-            print("what")
-        isDone(player)
+            done = False
+            if where[len(player[4])-1] == 1:
+                moveRight(player)
+                if generation == 1:
+                    player[4] += [1]
+            elif where[len(player[4]) -1] == 2:
+                moveLeft(player)
+                if generation == 1:
+                    player[4] += [2]
+            elif where[len(player[4]) - 1] == 3:
+                moveUp(player)
+                if generation == 1:
+                    player[4] += [3]
+            elif where[len(player[4]) - 1] == 4:
+                moveDown(player)
+                if generation == 1:
+                     player[4] += [4]
+            else:
+                print("what")
+            isDone(player)
 
-        x = player[2] - 10
-        y = player[3] - 10
-        print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
-    player[5] = ((player[2] - 1310) + (player[3] - 810))/100
+            x = player[2] - 10
+            y = player[3] - 10
+            print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
+        player[5] = ((player[2] - 1310) + (player[3] - 810))/100
+    elif not generation == 1:
+        print("generation 2")
+        n = 0
+        while n < 20:
+            if player[4][n] == 1:
+                moveRight(player)
+            elif player[4][n] == 2:
+                moveLeft(player)
+            elif player[4][n] == 3:
+                moveUp(player)
+            elif player[4][n] == 4:
+                moveDown(player)
+            else:
+                print("okay srsly what is happening")
+            n += 1
 
 def start(generation):
     global fitnesses
@@ -183,6 +203,7 @@ def start(generation):
     moveCreatures = 0
 
     while moveCreatures < len(creatureList):
+        print("gen 2")
         brain(creatureList[moveCreatures],generation,moveCreatures)
 
         fitnesses += [creatureList[moveCreatures]]
@@ -192,6 +213,8 @@ def start(generation):
     fitnesses = sort(fitnesses)
     print(fitnesses[199])
     createNewGen()
+    print("gen 2?")
+    start(generation)
 
 
 createNewGen()
