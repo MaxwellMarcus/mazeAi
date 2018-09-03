@@ -38,13 +38,15 @@ def createNewGen():
             createCreatures += 1
         createCreatures = 0
     else:
-        print("gen 2!")
         creatureList = []
         while createCreatures < 200:
             l = 0
-            while l < 5:
-                _1 = [10,10,110,110,fitnesses[createCreatures][4]]
+            while l < 4:
+                _1 = [10,10,110,110,fitnesses[createCreatures][4],0]
                 l += 1
+
+                creatureList.append(_1)
+
             createCreatures += 1
 
     game = True
@@ -182,7 +184,6 @@ def brain(player,generation,playernum):
             print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
         player[5] = ((player[2] - 1310) + (player[3] - 810))/100
     elif not generation == 1:
-        print("generation 2")
         n = 0
         while n < 20:
             if player[4][n] == 1:
@@ -197,13 +198,15 @@ def brain(player,generation,playernum):
                 print("okay srsly what is happening")
             n += 1
 
-def start(generation):
+        player[5] = ((player[2] - 1310) + (player[3] - 810))/100
+
+def start():
+    global generation
     global fitnesses
     global creatureList
     moveCreatures = 0
 
     while moveCreatures < len(creatureList):
-        print("gen 2")
         brain(creatureList[moveCreatures],generation,moveCreatures)
 
         fitnesses += [creatureList[moveCreatures]]
@@ -211,11 +214,13 @@ def start(generation):
         moveCreatures += 1
 
     fitnesses = sort(fitnesses)
-    print(fitnesses[199])
-    createNewGen()
-    print("gen 2?")
-    start(generation)
+    if not generation == 1:
+        print(fitnesses[199])
+    if generation == 1:
+        print(fitnesses[199])
+        createNewGen()
+        start()
 
 
 createNewGen()
-start(generation)
+start()
