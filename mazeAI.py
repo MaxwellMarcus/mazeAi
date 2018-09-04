@@ -12,7 +12,6 @@ import random
 #canvas = Canvas(#root,width = screen_width,height = screen_height)
 #canvas.pack()
 
-print("working")
 
 creatureList = []
 
@@ -41,10 +40,10 @@ def createNewGen():
         creatureList = []
         while createCreatures < 200:
             l = 0
-            while l < 4:
+            while l < 5:
                 directions = fitnesses[createCreatures][4]
                 z = 0
-                if z < 20:
+                while z < 1:
                     changedDirection = random.randint(0,19)
                     directions[changedDirection] = random.randint(1,4)
                     z += 1
@@ -140,10 +139,11 @@ def sort(original):
 
         x+=1
         y = 0
+#    print(len(end))
     while y < 800:
         end.remove(end[0])
         y += 1
-
+    original = []
     return(end)
 
 def brain(player,generation,playernum):
@@ -212,11 +212,10 @@ def start():
     global fitnesses
     global creatureList
     moveCreatures = 0
-
+    fitnesses = []
     while moveCreatures < len(creatureList):
-        print(generation)
-        print(moveCreatures)
-        print(creatureList[moveCreatures])
+    #    print(moveCreatures)
+    #    print(creatureList[moveCreatures])
         brain(creatureList[moveCreatures],generation,moveCreatures)
 
         fitnesses += [creatureList[moveCreatures]]
@@ -225,11 +224,12 @@ def start():
 
     fitnesses = sort(fitnesses)
     if not generation == 1:
-        print(fitnesses[199])
+        print(generation)
+        print(creatureList[999])
 
     if generation == 1:
-        print(creatureList[999])
-        #print(fitnesses[199])
+        print(generation)
+        print(fitnesses[199])
 
     if generation < 30:
         createNewGen()
