@@ -42,7 +42,14 @@ def createNewGen():
         while createCreatures < 200:
             l = 0
             while l < 4:
-                _1 = [10,10,110,110,fitnesses[createCreatures][4],0]
+                directions = fitnesses[createCreatures][4]
+                z = 0
+                if z < 20:
+                    changedDirection = random.randint(0,19)
+                    directions[changedDirection] = random.randint(1,4)
+                    z += 1
+
+                _1 = [10,10,110,110,directions,0]
                 l += 1
 
                 creatureList.append(_1)
@@ -181,7 +188,7 @@ def brain(player,generation,playernum):
 
             x = player[2] - 10
             y = player[3] - 10
-            print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
+            #print(str(playernum) + "(" + str(x/100) + "," + str(y/100) + ")")
         player[5] = ((player[2] - 1310) + (player[3] - 810))/100
     elif not generation == 1:
         n = 0
@@ -207,6 +214,9 @@ def start():
     moveCreatures = 0
 
     while moveCreatures < len(creatureList):
+        print(generation)
+        print(moveCreatures)
+        print(creatureList[moveCreatures])
         brain(creatureList[moveCreatures],generation,moveCreatures)
 
         fitnesses += [creatureList[moveCreatures]]
@@ -216,8 +226,12 @@ def start():
     fitnesses = sort(fitnesses)
     if not generation == 1:
         print(fitnesses[199])
+
     if generation == 1:
-        print(fitnesses[199])
+        print(creatureList[999])
+        #print(fitnesses[199])
+
+    if generation < 30:
         createNewGen()
         start()
 
