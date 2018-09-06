@@ -30,32 +30,33 @@ def createNewGen():
     generation += 1
 
     if generation == 1:
-        while createCreatures < 1000:
-            _1 = [10,10,110,110,[],0,]#,createCreatures]
+        while createCreatures < 10:
+            _1 = [10,10,110,110,[],0]
 
             creatureList.append(_1)
             createCreatures += 1
-        createCreatures = 0
     else:
         creatureList = []
-        while createCreatures < 200:
+        while createCreatures < 1:
             l = 0
-            while l < 5:
+            while l < 10:
                 directions = fitnesses[createCreatures][4]
                 z = 0
+        #        print(directions)
                 while z < 1:
                     changedDirection = random.randint(0,19)
                     directions[changedDirection] = random.randint(1,4)
                     z += 1
-
+        #        print(directions)
                 _1 = [10,10,110,110,directions,0]
                 l += 1
 
                 creatureList.append(_1)
-
             createCreatures += 1
+    #    print(creatureList[999])
 
     game = True
+    print(generation)
 
 def moveRight(player):
     if len(player[4]) < 100 and not player[2] + 100 > 1310:
@@ -139,10 +140,11 @@ def sort(original):
 
         x+=1
         y = 0
-#    print(len(end))
-    while y < 800:
+
+    while y < 9:
         end.remove(end[0])
         y += 1
+    #print(len(end))
     original = []
     return(end)
 
@@ -168,20 +170,16 @@ def brain(player,generation,playernum):
             done = False
             if where[len(player[4])-1] == 1:
                 moveRight(player)
-                if generation == 1:
-                    player[4] += [1]
+                player[4] += [1]
             elif where[len(player[4]) -1] == 2:
                 moveLeft(player)
-                if generation == 1:
-                    player[4] += [2]
+                player[4] += [2]
             elif where[len(player[4]) - 1] == 3:
                 moveUp(player)
-                if generation == 1:
-                    player[4] += [3]
+                player[4] += [3]
             elif where[len(player[4]) - 1] == 4:
                 moveDown(player)
-                if generation == 1:
-                     player[4] += [4]
+                player[4] += [4]
             else:
                 print("what")
             isDone(player)
@@ -213,6 +211,7 @@ def start():
     global creatureList
     moveCreatures = 0
     fitnesses = []
+
     while moveCreatures < len(creatureList):
     #    print(moveCreatures)
     #    print(creatureList[moveCreatures])
@@ -221,17 +220,21 @@ def start():
         fitnesses += [creatureList[moveCreatures]]
 
         moveCreatures += 1
-
     fitnesses = sort(fitnesses)
-    if not generation == 1:
-        print(generation)
-        print(creatureList[999])
 
-    if generation == 1:
-        print(generation)
-        print(fitnesses[199])
+    k = 0
 
-    if generation < 30:
+    while k < 10:
+        print(creatureList[k])
+        k += 1
+
+    print('''
+
+
+
+    ''')
+
+    if generation < 10:
         createNewGen()
         start()
 
