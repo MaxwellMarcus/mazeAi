@@ -4,8 +4,12 @@ creatureList = []
 numOfGens = 10
 generation = 1
 fitnesses = []
+topFitnesses = []
+numOfTopFittnesses = 1
 numCreatures = 1000
 numMoves = 20
+creatureRepeats = numCreatures/numOfTopFittnesses
+creatureMoveChanges = 1
 
 creatureXPos = 0
 creatureYPos = 1
@@ -25,6 +29,8 @@ finnish = [playFieldX,playFieldY]
 def move(creature):
     i = 0
     while i < numMoves:
+        if generation > 1:
+            print(creature[creatureDirections])
         direction = creature[creatureDirections][i]
 
         if direction == right:
@@ -55,38 +61,68 @@ while i < numCreatures:
 
 i = 0
 
-while i < numCreatures:
-    creature = creatureList[i]
-    move(creature)
-    creature[creatureFitness] = (creature[creatureXPos] - playFieldX) + (creature[creatureYPos] - playFieldY)
-    fitnesses.append(creature[creatureFitness])
+while generation < numOfGens:
 
-    i += 1
+    while i < numCreatures:
+        creature = creatureList[i]
+        move(creature)
+        creature[creatureFitness] = (creature[creatureXPos] - playFieldX) + (creature[creatureYPos] - playFieldY)
+        fitnesses.append(creature)
 
-end = []
-i = 0
-while i < numCreatures:
+        i += 1
 
-    creature = fitnesses[i]
-    fitnessNum = creature[creatureFitness]
+    end = []
+    i = 0
+    while i < numCreatures:
 
-    if i == 0:
-        end += [creature]
+        creature = fitnesses[i]
+        fitnessNum = creature[creatureFitness]
 
-    elif fitnessNum < end[0][creatureFitness]:
-        end.insert(0,creature)
+        if i == 0:
+            end += [creature]
 
-    elif fitnessNum >= end[0][creatureFitness]:
-        isBigest = True
-        y = 0
-        while y < len(end):
-            if num<end[y][5]:
-                end.insert(y,original[x])
-                bigest = False
-                break
-            y += 1
-        if bigest:
-            end.append(original[x])
+        elif fitnessNum < end[0][creatureFitness]:
+            end.insert(0,creature)
 
-    x+=1
-    y = 0
+        elif fitnessNum >= end[0][creatureFitness]:
+            isBigest = True
+            j = 0
+            while j < len(end):
+                if fitnessNum < end[j][creatureFitness]:
+                    end.insert(j,creature)
+                    isBigest = False
+                    break
+                j += 1
+            if isBigest:
+                end.append(creature)
+        else:
+            print("what?")
+        i += 1
+
+    fitnesses = end
+
+    i = 0
+    while i < len(fitnesses) - 1 - numOfTopFittnesses:
+        fitnesses.remove(fitnesses[0])
+
+    print(fitnesses[len(fitnesses) - 1])
+
+    generation += 1
+
+    creatureList = []
+    i = 0
+    while i < numOfTopFittnesses:
+        l = 0
+        while l < creatureRepeats:
+            directions = fitnesses[i][creatureDirections]
+            z = 0
+            while z < creatureMoveChanges:
+                changedDirection = random.randint(0,19)
+                directions[changedDirection] = random.randint(1,4)
+                z += 1
+
+            creature = [0,0,directions,0]
+            l += 1
+
+            creatureList.append(creature)
+        i += 1
