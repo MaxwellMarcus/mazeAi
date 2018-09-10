@@ -1,7 +1,7 @@
 import random
 
 creatureList = []
-numOfGens = 10
+numOfGens = 2
 generation = 1
 fitnesses = []
 topFitnesses = []
@@ -28,10 +28,9 @@ finnish = [playFieldX,playFieldY]
 
 def move(creature):
     i = 0
+    direction = creature[creatureDirections][i]
     while i < numMoves:
-        if generation > 1:
-            print(creature[creatureDirections])
-        direction = creature[creatureDirections][i]
+    #    print(creature[creatureDirections])
 
         if direction == right:
             if creature[creatureXPos] < playFieldX:
@@ -102,15 +101,15 @@ while generation < numOfGens:
     fitnesses = end
 
     i = 0
-    while i < len(fitnesses) - 1 - numOfTopFittnesses:
+    while i < len(fitnesses) - numOfTopFittnesses:
         fitnesses.remove(fitnesses[0])
 
-    print(fitnesses[len(fitnesses) - 1])
-
+    print(fitnesses)
     generation += 1
 
     creatureList = []
     i = 0
+    print(creatureList)
     while i < numOfTopFittnesses:
         l = 0
         while l < creatureRepeats:
@@ -125,4 +124,11 @@ while generation < numOfGens:
             l += 1
 
             creatureList.append(creature)
+            if l < 2:
+                print(creatureList[0])
+        print(creatureList[0])
         i += 1
+    print("")
+    print('''
+
+    ''')
