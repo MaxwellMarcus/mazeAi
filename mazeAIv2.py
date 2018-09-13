@@ -6,7 +6,7 @@ generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1
-numCreatures = 1000
+numCreatures = 2
 numMoves = 20
 creatureRepeats = numCreatures/numOfTopFittnesses
 creatureMoveChanges = 1
@@ -28,9 +28,8 @@ finnish = [playFieldX,playFieldY]
 
 def move(creature):
     i = 0
-    direction = creature[creatureDirections][i]
     while i < numMoves:
-    #    print(creature[creatureDirections])
+        direction = creature[creatureDirections][i]
 
         if direction == right:
             if creature[creatureXPos] < playFieldX:
@@ -46,6 +45,7 @@ def move(creature):
                 creature[creatureYPos] -= 1
         i += 1
 
+    return creature
 i = 0
 while i < numCreatures:
     directions = []
@@ -60,13 +60,14 @@ while i < numCreatures:
 
 i = 0
 
-while generation < numOfGens:
-
+while generation <= numOfGens:
+    fitnesses = []
+    print("generation: " + str(generation))
+    i = 0
     while i < numCreatures:
-        creature = creatureList[i]
-        move(creature)
-        creature[creatureFitness] = (creature[creatureXPos] - playFieldX) + (creature[creatureYPos] - playFieldY)
-        fitnesses.append(creature)
+        creatureList[i] = move(creatureList[i])
+        creatureList[i][creatureFitness] = (creatureList[i][creatureXPos] - playFieldX) + (creatureList[i][creatureYPos] - playFieldY)
+        fitnesses.append(creatureList[i])
 
         i += 1
 
@@ -78,7 +79,7 @@ while generation < numOfGens:
         fitnessNum = creature[creatureFitness]
 
         if i == 0:
-            end += [creature]
+            end.append(creature)
 
         elif fitnessNum < end[0][creatureFitness]:
             end.insert(0,creature)
@@ -104,19 +105,20 @@ while generation < numOfGens:
     while i < len(fitnesses) - numOfTopFittnesses:
         fitnesses.remove(fitnesses[0])
 
-    print(fitnesses)
+    print("top fitness: " + str(fitnesses[0]))
     generation += 1
 
     creatureList = []
     i = 0
-    print(creatureList)
     while i < numOfTopFittnesses:
         l = 0
         while l < creatureRepeats:
             directions = fitnesses[i][creatureDirections]
+
             z = 0
             while z < creatureMoveChanges:
-                changedDirection = random.randint(0,19)
+                changedDirection = random.randint(0,numMoves - 1)
+                print("Creature" + str(l) + ": " + str(changedDirection))
                 directions[changedDirection] = random.randint(1,4)
                 z += 1
 
@@ -124,11 +126,5 @@ while generation < numOfGens:
             l += 1
 
             creatureList.append(creature)
-            if l < 2:
-                print(creatureList[0])
-        print(creatureList[0])
+            print("Creature" + str(l) + ":   " + str(creature))
         i += 1
-    print("")
-    print('''
-
-    ''')
