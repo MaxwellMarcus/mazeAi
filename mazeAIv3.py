@@ -1,36 +1,42 @@
 from tkinter import *
+import time
 import random
+
+multiplier = 10
 
 root = Tk()
 
-canvas = Canvas(root,width = 500,height = 500)
+canvas = Canvas(root,width = 120 * multiplier,height = 120 * multiplier,background = "black")
 canvas.pack()
 
 creatureList = []
-numOfGens = 20
+numOfGens = 200
 generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1
-numCreatures = 1000
-numMoves = 20
+numCreatures = 20
+numMoves = 200
 creatureRepeats = numCreatures/numOfTopFittnesses
-creatureMoveChanges = 1
+creatureMoveChanges = 5
 
 creatureXPos = 0
 creatureYPos = 1
 creatureDirections = 2
 creatureFitness = 3
+creatureGraphics = 4
 
 right = 1
 left = 2
 up = 3
 down = 4
 
-playFieldX = 10
-playFieldY  = 10
+playFieldX = 100
+playFieldY  = 100
 
 finnish = [playFieldX,playFieldY]
+
+finnishlLine = canvas.create_rectangle((playFieldX + 4)*multiplier,(playFieldY + 4)*multiplier,(playFieldX+14)*multiplier,(playFieldY+14)*multiplier,fill = "green")
 
 def move(creature):
     i = 0
@@ -51,6 +57,8 @@ def move(creature):
                 creature[creatureYPos] -= 1
         i += 1
 
+    canvas.delete(creature[creatureGraphics])
+    creature[creatureGraphics] = canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*10,(creature[1] - 5)*10, fill = "red",width = 10)
     return creature
 i = 0
 while i < numCreatures:
@@ -60,23 +68,28 @@ while i < numCreatures:
         directions.append(random.randint(1,4))
         j += 1
     creature = [0,0,directions,0]
-
+    creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*10,(creature[1] - 5)*10, fill = "red",width = 10))
     creatureList.append(creature)
     i += 1
 
 i = 0
 
 while generation <= numOfGens:
-    root.update()
-    
     fitnesses = []
     print("generation: " + str(generation))
     i = 0
     while i < numCreatures:
+        root.update()
+        time.sleep(1/(numCreatures*10))
         creatureList[i] = move(creatureList[i])
         creatureList[i][creatureFitness] = (creatureList[i][creatureXPos] - playFieldX) + (creatureList[i][creatureYPos] - playFieldY)
         fitnesses.append(creatureList[i])
 
+        i += 1
+
+    i = 0
+    while i < numCreatures:
+        canvas.delete(creatureList[i][creatureGraphics])
         i += 1
 
     end = []
@@ -113,7 +126,11 @@ while generation <= numOfGens:
     while i < len(fitnesses) - numOfTopFittnesses:
         fitnesses.remove(fitnesses[0])
 
-    print("top fitness: " + str(fitnesses[0]))
+    if fitnesses[0][creatureFitness] == 0:
+        time.sleep(1)
+        generation = numOfGens
+
+    print("top fitness: " + str(fitnesses[0][creatureFitness]))
     generation += 1
 
     creatureList = []
@@ -130,6 +147,8 @@ while generation <= numOfGens:
                 z += 1
 
             creature = [0,0,directions,0]
+            creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*10,(creature[1] - 5)*10, fill = "red",width = 10))
+            creatureList.append(creature)
             l += 1
 
             creatureList.append(creature)
