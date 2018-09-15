@@ -1,12 +1,12 @@
 import random
 
 creatureList = []
-numOfGens = 2
+numOfGens = 20
 generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1
-numCreatures = 2
+numCreatures = 10000
 numMoves = 20
 creatureRepeats = numCreatures/numOfTopFittnesses
 creatureMoveChanges = 1
@@ -113,12 +113,11 @@ while generation <= numOfGens:
     while i < numOfTopFittnesses:
         l = 0
         while l < creatureRepeats:
-            directions = fitnesses[i][creatureDirections]
+            directions = list(fitnesses[i][creatureDirections])
 
             z = 0
             while z < creatureMoveChanges:
                 changedDirection = random.randint(0,numMoves - 1)
-                print("Creature" + str(l) + ": " + str(changedDirection))
                 directions[changedDirection] = random.randint(1,4)
                 z += 1
 
@@ -126,5 +125,4 @@ while generation <= numOfGens:
             l += 1
 
             creatureList.append(creature)
-            print("Creature" + str(l) + ":   " + str(creature))
         i += 1
