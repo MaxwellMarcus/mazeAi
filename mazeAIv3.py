@@ -1,15 +1,21 @@
+from tkinter import *
 import random
 
+root = Tk()
+
+canvas = Canvas(root,width = 500,height = 500)
+canvas.pack()
+
 creatureList = []
-numOfGens = 2000
+numOfGens = 20
 generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1
-numCreatures = 10000
-numMoves = 2000
+numCreatures = 1000
+numMoves = 20
 creatureRepeats = numCreatures/numOfTopFittnesses
-creatureMoveChanges = 20
+creatureMoveChanges = 1
 
 creatureXPos = 0
 creatureYPos = 1
@@ -21,8 +27,8 @@ left = 2
 up = 3
 down = 4
 
-playFieldX = 1000
-playFieldY  = 1000
+playFieldX = 10
+playFieldY  = 10
 
 finnish = [playFieldX,playFieldY]
 
@@ -61,6 +67,8 @@ while i < numCreatures:
 i = 0
 
 while generation <= numOfGens:
+    root.update()
+    
     fitnesses = []
     print("generation: " + str(generation))
     i = 0
@@ -105,7 +113,7 @@ while generation <= numOfGens:
     while i < len(fitnesses) - numOfTopFittnesses:
         fitnesses.remove(fitnesses[0])
 
-    print("top fitness: " + str(fitnesses[0][creatureFitness]))
+    print("top fitness: " + str(fitnesses[0]))
     generation += 1
 
     creatureList = []
