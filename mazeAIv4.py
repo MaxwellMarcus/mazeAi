@@ -10,14 +10,14 @@ canvas = Canvas(root,width = 120 * multiplier,height = 120 * multiplier,backgrou
 canvas.pack()
 
 creatureList = []
-numOfGens = 200#int(input("number of generations: "))
+numOfGens = 2000#int(input("number of generations: "))
 generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1#int(input("number of surviving creatures: "))
 numCreatures = 20#int(input("number of creatures: "))
 creatureRepeats = numCreatures/numOfTopFittnesses
-creatureMoveChanges = 20#int(input("number of mutations: "))
+creatureMoveChanges = 12#int(input("number of mutations: "))
 
 creatureXPos = 0
 creatureYPos = 1
@@ -132,13 +132,17 @@ while generation <= numOfGens:
         generation = numOfGens
 
     print("top fitness: " + str(fitnesses[0][creatureFitness]))
+
     generation += 1
     numCreatures += 2
     creatureRepeats = numCreatures/numOfTopFittnesses
+
     print(numCreatures)
-    if generation % 5 == 0:
-        creatureMoveChanges -= 1
-        print(creatureMoveChanges)
+
+    if not creatureMoveChanges == 1:
+        if generation % 5 == 0:
+            creatureMoveChanges -= 1
+            print(creatureMoveChanges)
 
     creatureList = []
     i = 0
