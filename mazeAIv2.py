@@ -1,15 +1,15 @@
 import random
 
 creatureList = []
-numOfGens = 2000
+numOfGens = 300
 generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1
-numCreatures = 10000
-numMoves = 2000
+numCreatures = 20
+numMoves = 200
 creatureRepeats = numCreatures/numOfTopFittnesses
-creatureMoveChanges = 20
+creatureMoveChanges = 1
 
 creatureXPos = 0
 creatureYPos = 1
@@ -21,8 +21,8 @@ left = 2
 up = 3
 down = 4
 
-playFieldX = 1000
-playFieldY  = 1000
+playFieldX = 100
+playFieldY  = 100
 
 finnish = [playFieldX,playFieldY]
 

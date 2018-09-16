@@ -16,7 +16,6 @@ fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = int(input("number of surviving creatures: "))
 numCreatures = int(input("number of creatures: "))
-numMoves = int(input("number of moves: "))
 creatureRepeats = numCreatures/numOfTopFittnesses
 creatureMoveChanges = int(input("number of mutations: "))
 
@@ -33,6 +32,8 @@ down = 4
 
 playFieldX = 100
 playFieldY = 100
+
+numMoves = playFieldX + playFieldY
 
 finnish = [playFieldX,playFieldY]
 
@@ -57,7 +58,6 @@ def move(creature):
                 creature[creatureYPos] -= 1
         i += 1
 
-    canvas.delete(creature[creatureGraphics])
     creature[creatureGraphics] = canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*multiplier,(creature[0] - 5)*multiplier,(creature[1] - 5)*multiplier, fill = "red",width = multiplier)
     return creature
 i = 0
@@ -68,7 +68,7 @@ while i < numCreatures:
         directions.append(random.randint(1,4))
         j += 1
     creature = [0,0,directions,0]
-    creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*multiplier,(creature[1] - 5)*multiplier, fill = "red",width = multiplier))
+    creature.append(0)
     creatureList.append(creature)
     i += 1
 
@@ -89,7 +89,7 @@ while generation <= numOfGens:
 
     i = 0
     while i < numCreatures:
-        canvas.delete(creatureList[i][creatureGraphics])
+        canvas.itemconfig(creatureList[i][creatureGraphics],fill = "green")
         i += 1
 
     end = []
@@ -147,8 +147,7 @@ while generation <= numOfGens:
                 z += 1
 
             creature = [0,0,directions,0]
-            creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*multiplier,(creature[0] - 5)*multiplier,(creature[1] - 5)*multiplier, fill = "red",width = multiplier))
-            creatureList.append(creature)
+            creature.append(0)
             l += 1
 
             creatureList.append(creature)
