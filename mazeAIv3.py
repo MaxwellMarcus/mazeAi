@@ -2,23 +2,23 @@ from tkinter import *
 import time
 import random
 
-multiplier = 10
+multiplier = int(input("size multiplier: "))
 
 root = Tk()
 
-canvas = Canvas(root,width = 120 * multiplier,height = 120 * multiplier,background = "black")
+canvas = Canvas(root,width = 120 * multiplier,height = 120 * multiplier,background = "white")
 canvas.pack()
 
 creatureList = []
-numOfGens = 200
+numOfGens = int(input("number of generations: "))
 generation = 1
 fitnesses = []
 topFitnesses = []
-numOfTopFittnesses = 1
-numCreatures = 20
-numMoves = 200
+numOfTopFittnesses = int(input("number of surviving creatures: "))
+numCreatures = int(input("number of creatures: "))
+numMoves = int(input("number of moves: "))
 creatureRepeats = numCreatures/numOfTopFittnesses
-creatureMoveChanges = 5
+creatureMoveChanges = int(input("number of mutations: "))
 
 creatureXPos = 0
 creatureYPos = 1
@@ -32,7 +32,7 @@ up = 3
 down = 4
 
 playFieldX = 100
-playFieldY  = 100
+playFieldY = 100
 
 finnish = [playFieldX,playFieldY]
 
@@ -58,7 +58,7 @@ def move(creature):
         i += 1
 
     canvas.delete(creature[creatureGraphics])
-    creature[creatureGraphics] = canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*10,(creature[1] - 5)*10, fill = "red",width = 10)
+    creature[creatureGraphics] = canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*multiplier,(creature[0] - 5)*multiplier,(creature[1] - 5)*multiplier, fill = "red",width = multiplier)
     return creature
 i = 0
 while i < numCreatures:
@@ -68,7 +68,7 @@ while i < numCreatures:
         directions.append(random.randint(1,4))
         j += 1
     creature = [0,0,directions,0]
-    creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*10,(creature[1] - 5)*10, fill = "red",width = 10))
+    creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*multiplier,(creature[1] - 5)*multiplier, fill = "red",width = multiplier))
     creatureList.append(creature)
     i += 1
 
@@ -147,7 +147,7 @@ while generation <= numOfGens:
                 z += 1
 
             creature = [0,0,directions,0]
-            creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*10,(creature[0] - 5)*10,(creature[1] - 5)*10, fill = "red",width = 10))
+            creature.append(canvas.create_rectangle((creature[0] + 5)*multiplier,(creature[1] + 5)*multiplier,(creature[0] - 5)*multiplier,(creature[1] - 5)*multiplier, fill = "red",width = multiplier))
             creatureList.append(creature)
             l += 1
 
