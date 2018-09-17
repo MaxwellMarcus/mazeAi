@@ -15,7 +15,7 @@ generation = 1
 fitnesses = []
 topFitnesses = []
 numOfTopFittnesses = 1#int(input("number of surviving creatures: "))
-numCreatures = 20#int(input("number of creatures: "))
+numCreatures = 1000#int(input("number of creatures: "))
 creatureRepeats = numCreatures/numOfTopFittnesses
 creatureMoveChanges = 12#int(input("number of mutations: "))
 
@@ -46,10 +46,12 @@ def move(creature):
 
         if direction == right:
             if creature[creatureXPos] < playFieldX:
-                creature[creatureXPos] += 1
+                if creature[creatureYPos] > playFieldY/2 or not creature[creatureXPos] == playFieldX/2:
+                    creature[creatureXPos] += 1
         elif direction == left:
             if creature[creatureXPos] > 0:
-                creature[creatureXPos] -= 1
+                if not creature[creatureYPos] > playFieldY/2 or not creature[creatureXPos] == playFieldX/2:
+                    creature[creatureXPos] -= 1
         elif direction == up:
             if creature[creatureYPos] < playFieldY:
                 creature[creatureYPos] += 1
@@ -75,6 +77,7 @@ while i < numCreatures:
 i = 0
 
 while generation <= numOfGens:
+
     fitnesses = []
     print("generation: " + str(generation))
     i = 0
@@ -134,12 +137,8 @@ while generation <= numOfGens:
     print("top fitness: " + str(fitnesses[0][creatureFitness]))
 
     generation += 1
-    numCreatures += 2
-    creatureRepeats = numCreatures/numOfTopFittnesses
 
-    if not creatureMoveChanges == 1:
-        if generation % 5 == 0:
-            creatureMoveChanges -= 1
+    creatureRepeats = numCreatures/numOfTopFittnesses
 
     creatureList = []
     i = 0
